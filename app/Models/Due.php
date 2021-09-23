@@ -13,4 +13,8 @@ class Due extends Model
       'date',
       'amount'
     ];
+
+    public function payments(){
+      return $this->hasMany('App\Models\Payment');
+    }
 }

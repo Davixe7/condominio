@@ -13,4 +13,8 @@ class Apartment extends Model
       'name',
       'floor'
     ];
+
+    public function payments(){
+      return $this->hasMany('App\Models\Payment');
+    }
 }
