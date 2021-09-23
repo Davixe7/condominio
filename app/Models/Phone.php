@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Due extends Model
+class Phone extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-      'date',
-      'amount'
+      'phone',
+      'whatsapp',
+      'phoneable_id',
+      'phoneable_type',
     ];
 
-    public function payments(){
-      return $this->hasMany('App\Models\Payment');
+    public function phoneable(){
+      return $this->morphTo();
     }
+    
 }

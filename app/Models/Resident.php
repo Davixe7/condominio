@@ -21,4 +21,9 @@ class Resident extends Model
     public function apartment(){
       return $this->belongsTo('App\Models\Apartment');
     }
+
+    public function phones()
+    {
+      return $this->morphMany('App\Models\Phone', 'phoneable');
+    }
 }
