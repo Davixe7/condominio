@@ -19,8 +19,6 @@ class CreatePhonesTable extends Migration
             $table->string('phone');
             $table->boolean('whatsapp');
             $table->morphs('phoneable');
-            $table->unsignedBigInteger('phoneable_id');
-            $table->string('phoneable_type');
         });
     }
 

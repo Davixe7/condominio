@@ -14,6 +14,11 @@ class Apartment extends Model
       'floor'
     ];
 
+    protected $hidden = [
+      'created_at',
+      'updated_at'
+    ];
+
     public function payments(){
       return $this->hasMany('App\Models\Payment');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\Apartment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -14,7 +15,11 @@ class PaymentController extends Controller
      */
     public function index()
     {
-      return response()->json(['payments'=>Payment::all()]);
+      return view('payments.index', ['payments' => Payment::with('apartment')->get() ]);
+    }
+
+    public function create(){
+      return view('payments.create', ['apartments' => Apartment::all()]);
     }
 
     /**
@@ -26,10 +31,11 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
       $payment = Payment::create([
-        'due_id'       => $request->due_id,
         'apartment_id' => $request->apartment_id,
         'date'         => $request->date,
+        'paid_at'      => $request->paid_at,
         'method'       => $request->method,
+        'amount'       => $request->amount,
         'reference'    => $request->reference,
       ]);
 
@@ -57,7 +63,6 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
       $payment->update([
-        'due_id'       => $request->due_id,
         'apartment_id' => $request->apartment_id,
         'date'         => $request->date,
         'method'       => $request->method,

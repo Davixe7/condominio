@@ -16,10 +16,11 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('due_id');
             $table->unsignedBigInteger('apartment_id');
             $table->date('date');
-            $table->string('reference');
+            $table->date('paid_at');
+            $table->string('reference')->nullable();
+            $table->unsignedInteger('amount');
             $table->enum('method', ['transferencia', 'pagomovil', 'efectivo', 'dolares']);
         });
     }

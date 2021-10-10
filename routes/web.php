@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('residents', 'App\Http\Controllers\ResidentController');
+Route::resource('apartments', 'App\Http\Controllers\ApartmentController');
+Route::resource('payments', 'App\Http\Controllers\PaymentController');

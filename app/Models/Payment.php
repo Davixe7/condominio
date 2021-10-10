@@ -10,11 +10,12 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
-      'due_id',
       'apartment_id',
       'date',
+      'paid_at',
       'method',
       'reference',
+      'amount',
     ];
 
     public function apartment(){
