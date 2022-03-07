@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
+use USD;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -15,7 +17,11 @@ class PaymentController extends Controller
      */
     public function index()
     {
-      return view('payments.index', ['payments' => Payment::with('apartment')->get() ]);
+      return view('payments.index', [
+        'payments'    => Payment::with('apartment')->get(),
+        'usd_price'   => USD::getUsdPrice(),
+        'format_date' => Carbon::now()->formatLocalized('%a %d %B %G')
+      ]);
     }
 
     public function create(){

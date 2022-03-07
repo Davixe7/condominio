@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        setlocale(LC_ALL, 'es_ES');
+        setlocale(LC_TIME, '');
+        \Carbon\Carbon::setLocale( 'es' );
     }
 }

@@ -5,18 +5,21 @@
         <v-col lg="6" class="mx-auto">
           <v-card class="mb-3">
             <v-card-title> Balances </v-card-title>
-            <v-card-subtitle> Dom 03 de Octubre - Dolar Paralelo 5.14 VEF</v-card-subtitle>
+            <v-card-subtitle>
+              <span class="date">{{ formatDate }}</span> - Dolar Paralelo
+              {{ usdPrice }} VEF</v-card-subtitle
+            >
             <v-row no-gutters>
               <v-col>
-                <v-card-title>13.00 VEF</v-card-title>
+                <v-card-title>{{ totalVEF }} VEF</v-card-title>
                 <v-card-subtitle>Saldo en Bolivares</v-card-subtitle>
               </v-col>
               <v-col>
-                <v-card-title>02.00 USD</v-card-title>
+                <v-card-title>{{ totalUSD }} USD</v-card-title>
                 <v-card-subtitle>Saldo en Divisa</v-card-subtitle>
               </v-col>
               <v-col class="text-right">
-                <v-card-title class="justify-end">04.50 USD</v-card-title>
+                <v-card-title class="justify-end">{{ total }} USD</v-card-title>
                 <v-card-subtitle>Total</v-card-subtitle>
               </v-col>
             </v-row>
@@ -25,13 +28,17 @@
           <v-card class="mb-3">
             <v-card-title> Octubre 2021 </v-card-title>
             <v-data-table
-            v-if="payments && payments.length"
-            :headers="headers"
-            :items="payments"
-            :items-per-page="100"
-          ></v-data-table>
+              v-if="payments && payments.length"
+              :headers="headers"
+              :items="payments"
+              :items-per-page="100"
+              :multi-sort="true"
+            >
+              <template v-slot:item.date="{ item }">
+                {{ item.date | monthName }}
+              </template>
+            </v-data-table>
           </v-card>
-          
         </v-col>
       </v-row>
     </v-container>
@@ -47,6 +54,44 @@ export default {
       default() {
         return [];
       },
+    },
+    usdPrice: {
+      type: Number,
+      default: 0,
+    },
+    formatDate: {
+      type: String,
+      default: "Cargando...",
+    },
+  },
+  filters:{
+    monthName(date){
+      console.log(date)
+      return new Date(date).toLocaleString('es-es',{month:'short'})
+    }
+  },
+  computed: {
+    totalVEF() {
+      if (!this.payments || !this.payments.length) {
+        return 0;
+      }
+      let amount = this.payments
+        .filter((payment) => payment.method != "dolares")
+        .reduce((sum, payment) => sum + Number(payment.amount), 0);
+
+      return Math.round(Number(amount) * 100) / 100;
+    },
+    totalUSD() {
+      if (!this.payments || !this.payments.length) {
+        return 0;
+      }
+      return this.payments
+        .filter((payment) => payment.method == "dolares")
+        .reduce((sum, payment) => sum + Number(payment.amount), 0);
+    },
+    total() {
+      let total = this.totalVEF / this.usdPrice + this.totalUSD;
+      return Math.round(total * 100) / 100;
     },
   },
   data() {
@@ -95,4 +140,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.date {
+  text-transform: capitalize;
+}
 </style>
