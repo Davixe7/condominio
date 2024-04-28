@@ -35,7 +35,7 @@
               :multi-sort="true"
             >
               <template v-slot:item.date="{ item }">
-                {{ item.date | monthName }}
+                {{ item.formatDate }}
               </template>
             </v-data-table>
           </v-card>

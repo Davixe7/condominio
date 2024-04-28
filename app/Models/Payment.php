@@ -18,6 +18,11 @@ class Payment extends Model
       'amount',
     ];
 
+    protected $hidden = [
+      'created_at',
+      'updated_at',
+    ];
+
     public function apartment(){
       return $this->belongsTo('App\Models\Apartment');
     }

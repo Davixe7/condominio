@@ -2110,6 +2110,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Payments",
   props: {
@@ -22894,7 +22896,27 @@ var render = function() {
                               items: _vm.payments,
                               "items-per-page": 100,
                               "multi-sort": true
-                            }
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "item.date",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return [
+                                      _vm._v(
+                                        "\n              " +
+                                          _vm._s(item.formatDate) +
+                                          "\n            "
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              false,
+                              3613029260
+                            )
                           })
                         : _vm._e()
                     ],

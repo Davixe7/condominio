@@ -9,6 +9,8 @@ class Apartment extends Model
 {
     use HasFactory;
 
+    protected $appends = ['paymentts'];
+
     protected $fillable = [
       'name',
       'floor'
@@ -16,7 +18,8 @@ class Apartment extends Model
 
     protected $hidden = [
       'created_at',
-      'updated_at'
+      'updated_at',
+      'payments'
     ];
 
     public function payments(){
@@ -25,5 +28,9 @@ class Apartment extends Model
 
     public function phones(){
       return $this->morphMany('App\Models\Phone', 'phoneable');
+    }
+
+    public function getPaymenttsAttribute(){
+      return $this->payments->keyBy('date');
     }
 }

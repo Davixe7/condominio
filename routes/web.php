@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+    // $payments = App\Models\Payment::where('reference', '!=', '0000')->where('created_at', '>', '2021-12-25')->get();
+    // return $payments;
+
+
+    $apartments = App\Models\Apartment::with('payments')->get();
+    return view('post', ['apartments'=>$apartments]);
+
     return view('welcome');
 });
 
